@@ -1,0 +1,245 @@
+/* Page setup */
+@page {
+  size: A4;
+  margin: 1in;
+  @bottom-center {
+    content: counter(page);
+    font-family: "Palatino", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+    font-size: 9pt;
+    color: #666;
+  }
+}
+
+@page :first {
+  @bottom-center { content: none; }
+}
+
+/* Base typography */
+body {
+  font-family: "Palatino", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  font-size: 11pt;
+  line-height: 1.3;
+  color: #1a1a1a;
+  text-rendering: optimizeLegibility;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #111;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  page-break-after: avoid;
+}
+
+h1 { font-size: 22pt; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+h2 { font-size: 16pt; border-bottom: 1px solid #ccc; padding-bottom: 0.2em; }
+h3 { font-size: 13pt; }
+h4 { font-size: 11pt; font-style: italic; }
+
+/* Cover page */
+.cover-page {
+  text-align: center;
+  padding-top: 3in;
+  page-break-after: always;
+}
+
+.cover-title {
+  font-size: 32pt;
+  border-bottom: none;
+  color: #111;
+  line-height: 1.2;
+  margin-bottom: 0.5em;
+}
+
+.cover-subtitle {
+  font-size: 18pt;
+  color: #555;
+  font-style: italic;
+  margin-bottom: 2em;
+}
+
+.cover-date {
+  font-size: 12pt;
+  color: #888;
+  margin-top: 3em;
+}
+
+/* Part title pages */
+.part-title-page {
+  text-align: center;
+  padding-top: 3.5in;
+  page-break-after: always;
+}
+
+.part-title-page h1,
+.part-heading {
+  font-size: 26pt;
+  border-bottom: none;
+  color: #222;
+}
+
+/* Page breaks */
+.page-break {
+  page-break-after: always;
+  break-after: page;
+}
+
+/* Code blocks */
+pre, code {
+  font-family: "SF Mono", "Menlo", "Monaco", "Consolas", "Liberation Mono", monospace;
+}
+
+code {
+  font-size: 9.5pt;
+  background-color: #f5f5f5;
+  padding: 0.15em 0.3em;
+  border-radius: 3px;
+}
+
+pre {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0.8em 1em;
+  font-size: 9pt;
+  line-height: 1.4;
+  overflow-x: auto;
+  page-break-inside: avoid;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  font-size: 9pt;
+}
+
+/* Syntax highlighting (kate theme colors) */
+.sourceCode .kw { color: #007020; font-weight: bold; }  /* keyword */
+.sourceCode .dt { color: #902000; }  /* data type */
+.sourceCode .dv { color: #40a070; }  /* decimal value */
+.sourceCode .bn { color: #40a070; }  /* base n */
+.sourceCode .fl { color: #40a070; }  /* float */
+.sourceCode .ch { color: #4070a0; }  /* char */
+.sourceCode .st { color: #4070a0; }  /* string */
+.sourceCode .co { color: #60a0b0; font-style: italic; }  /* comment */
+.sourceCode .ot { color: #007020; }  /* other */
+.sourceCode .al { color: #ff0000; font-weight: bold; }  /* alert */
+.sourceCode .fu { color: #06287e; }  /* function */
+.sourceCode .er { color: #ff0000; font-weight: bold; }  /* error */
+
+/* Links */
+a {
+  color: #2a5db0;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Tables */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1em 0;
+  font-size: 10pt;
+  page-break-inside: avoid;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 0.5em 0.7em;
+  text-align: left;
+}
+
+th {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+/* Blockquotes */
+blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  color: #555;
+  background-color: #fafafa;
+  page-break-inside: avoid;
+}
+
+/* Lists */
+ul, ol {
+  margin: 0.5em 0;
+  padding-left: 1.5em;
+}
+
+li {
+  margin-bottom: 0.3em;
+}
+
+/* Bold/emphasis styling for pattern names and SE parallels */
+strong {
+  color: #111;
+}
+
+em {
+  color: #333;
+}
+
+/* Table of Contents */
+nav#TOC {
+  page-break-after: always;
+  margin-bottom: 2em;
+}
+
+nav#TOC > ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+nav#TOC ul {
+  list-style: none;
+}
+
+nav#TOC li {
+  margin: 0.3em 0;
+  line-height: 1.5;
+}
+
+nav#TOC a {
+  color: #1a1a1a;
+  text-decoration: none;
+}
+
+nav#TOC > ul > li {
+  margin-top: 0.8em;
+  font-weight: bold;
+}
+
+nav#TOC > ul > li > ul > li {
+  font-weight: normal;
+  padding-left: 1.5em;
+}
+
+/* Horizontal rules */
+hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 2em 0;
+}
+
+/* Keep paragraphs together where sensible */
+p {
+  orphans: 3;
+  widows: 3;
+}
+
+h2, h3 {
+  page-break-after: avoid;
+}
