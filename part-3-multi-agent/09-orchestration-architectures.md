@@ -69,6 +69,41 @@ Workers (mid-tier models):
 
 **When to use it**: Complex tasks where quality assurance is critical. The oracle reviews every worker output before it's committed, catching errors that a cheaper model produces. Costs more than pure worker execution but much less than using the oracle for everything.
 
+### Real-World Example: Anthropic's Advisor Strategy
+
+In April 2026, Anthropic shipped the **Advisor Strategy** as a first-party platform feature on the Claude API. It's a production implementation of Oracle-Worker with a critical architectural twist: **the cheap model delegates up, not the expensive model delegating down**.
+
+**Architecture**:
+```
+┌─────────────────────────────────────────────────────┐
+│                  Main Loop                          │
+│                                                     │
+│  ┌───────────────┐        ┌──────────────────────┐  │
+│  │   Executor    │──tool──▶│      Advisor        │  │
+│  │   (Sonnet)    │  call  │      (Opus)          │  │
+│  │ Runs every    │◀───────│   On-demand only     │  │
+│  │   turn        │ advice │                      │  │
+│  └───────┬───────┘        └──────────┬───────────┘  │
+│          │                           │              │
+│          │ read/write        reviews │              │
+│          ▼                           ▼              │
+│  ┌─────────────────────────────────────────────┐    │
+│  │         Shared Context                      │    │
+│  │   (conversation + tools + history)          │    │
+│  └─────────────────────────────────────────────┘    │
+└─────────────────────────────────────────────────────┘
+```
+
+**Why this matters architecturally**: In the Dual LLM Pattern (Module 8), the expensive model sits at the top — it plans, and the cheap model executes. The Advisor Strategy inverts this. The cheap model (Sonnet) runs the main agent loop, handles routine tool calls, and manages the conversation. When it encounters a decision that exceeds its capability — an architectural question, a subtle bug, a trade-off evaluation — it invokes the expensive model (Opus) *as a tool call*. The advisor reviews the shared context, provides guidance, and returns control to the executor.
+
+**SE parallel**: This is an escalation callback, not a coordinator-worker. Think of it as a junior developer who handles the sprint backlog independently but pings the staff engineer for design reviews — not a tech lead who assigns all tasks. The staff engineer doesn't manage the workflow; they're consulted on-demand.
+
+**Shared context, not passed context**: A key design choice is that the advisor reads the *same* shared context (full conversation, tool history, file state) rather than receiving a summarized handoff from the executor. This avoids the lossy compression problem that plagues planner-worker architectures where the planner must distill complex state into instructions. It's the difference between shared memory (the advisor reads the executor's heap directly) and message passing (the executor serializes state into a message).
+
+**Results**: Sonnet with an Opus advisor scored 74.8% on SWE-bench Multilingual — up 2.7 points from Sonnet alone (72.1%) — while cutting costs 11.9% per task. Haiku as executor with Opus as advisor showed even larger relative gains. The cost savings come from the advisor being invoked only on hard decisions rather than running every turn.
+
+**Takeaway for system design**: The Advisor Strategy validates a general principle — the right default for multi-model architectures is often "cheap model drives, expensive model advises" rather than "expensive model plans, cheap model executes." The cheap model handles the 80% it's competent at without round-tripping to the expensive model, and the expensive model's context window isn't consumed by routine operations.
+
 ## Pattern: LLM Map-Reduce
 
 **What it does**: Applies the MapReduce paradigm to LLM processing — split a large input into chunks, process each chunk independently (map), then combine results (reduce).
