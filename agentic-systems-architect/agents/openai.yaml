@@ -1,0 +1,7 @@
+interface:
+  display_name: "Agentic Systems Architect"
+  short_description: "Architecture partner for agentic systems"
+  default_prompt: "Use $agentic-systems-architect to review my agent design and recommend the right patterns with trade-offs."
+
+policy:
+  allow_implicit_invocation: true
