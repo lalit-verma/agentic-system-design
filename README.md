@@ -92,6 +92,14 @@ Estimated total reading time: ~4 hours. Allow 8-12 hours including exercises.
 | 22 | End-to-End Platform Design | 10 min | Full system design exercise integrating patterns from every part |
 | 23 | The Evolving Landscape | 9 min | Durable vs. transitional patterns, emerging frontiers, what to build now |
 
+## Architect Partner Skill
+
+An architecture partner skill that uses retrieval-first design to brainstorm, review, and stress-test your agentic system designs against the 149 patterns in this course. Instead of preloading the full course, it routes your query through the course index and pulls only the most relevant modules and excerpts.
+
+Interaction modes: **Pattern Recommendation**, **Design Review**, **Solution Exploration**, **Devil's Advocate**.
+
+See [agentic-systems-architect/README.md](agentic-systems-architect/README.md) for installation and usage instructions.
+
 ## Supporting Materials
 
 - **[glossary.md](glossary.md)** — 55+ terms defined with module of first introduction

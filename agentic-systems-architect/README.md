@@ -16,6 +16,8 @@ retriever.
 
 ## Installation
 
+For the full course overview and learning path, see the [course README](../README.md).
+
 The installer is target-directory based so it can work with any tool that expects skills as
 folders on disk.
 
